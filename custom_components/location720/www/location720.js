@@ -1422,7 +1422,7 @@ window.customCards.push({
   name: 'Location720',
   description: 'Private Life360 alternative - tracking, routes, playback, analytics',
   preview: true,
-  documentationURL: 'https://github.com/yourusername/Location720'
+  documentationURL: 'https://github.com/BushDozer/Location720'
 });
 
 console.info(`%c LOCATION720 %c v${CARD_VERSION} `, 'background:#FF6B6B;color:white;font-weight:bold', 'background:#333;color:white');

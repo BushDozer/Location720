@@ -26,7 +26,7 @@ A complete Home Assistant integration for family location tracking with historic
 ### HACS (Recommended)
 
 1. Open HACS → Integrations → ⋮ (menu) → Custom repositories
-2. Add URL: `https://github.com/yourusername/Location720`
+2. Add URL: `https://github.com/BushDozer/Location720`
 3. Category: **Integration**
 4. Click "Add"
 5. Find "Location720" and click Install
@@ -137,8 +137,8 @@ Your location data never leaves your network.
 
 ## Support
 
-- [GitHub Issues](https://github.com/yourusername/Location720/issues)
-- [Documentation](https://github.com/yourusername/Location720/wiki)
+- [GitHub Issues](https://github.com/BushDozer/Location720/issues)
+- [Documentation](https://github.com/BushDozer/Location720/wiki)
 
 ## License
 
