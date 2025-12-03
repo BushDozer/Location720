@@ -555,8 +555,8 @@ class Location720Card extends HTMLElement {
       default_zoom: 13,
       map_height: 350,
       persons: [],
-      person_colors: {
       auto_follow: "off",
+      person_colors: {
         person1: '#FF6B6B',
         person2: '#4ECDC4',
         person3: '#45B7D1'
