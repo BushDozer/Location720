@@ -12,6 +12,7 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.helpers import device_registry as dr
 from homeassistant.components.http import StaticPathConfig
+from homeassistant.components.frontend import add_extra_js_url
 
 from .const import (
     DOMAIN,
@@ -33,7 +34,6 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up Location720 domain - registers frontend."""
     await _async_register_frontend(hass)
     return True
-
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -72,16 +72,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def _async_register_frontend(hass: HomeAssistant) -> None:
     """Register the frontend resources."""
-    # Get the path to the www directory
     www_path = Path(__file__).parent / "www"
     
-    if www_path.exists():
-        # Register static path for serving the JS file
-        await hass.http.async_register_static_paths([
-            StaticPathConfig("/location720", str(www_path), cache_headers=False)
-        ])
-        
-        _LOGGER.debug("Registered Location720 frontend at /location720")
+    if not www_path.exists():
+        _LOGGER.error("Location720 www directory not found at %s", www_path)
+        return
+    
+    # Register static path for serving the JS file
+    await hass.http.async_register_static_paths([
+        StaticPathConfig("/location720", str(www_path), cache_headers=False)
+    ])
+    
+    # Register as extra JS module so it loads automatically
+    add_extra_js_url(hass, FRONTEND_SCRIPT_URL)
+    
+    _LOGGER.info("Location720 frontend registered at %s", FRONTEND_SCRIPT_URL)
 
 
 async def _async_register_services(hass: HomeAssistant, entry: ConfigEntry) -> None:
@@ -98,26 +103,22 @@ async def _async_register_services(hass: HomeAssistant, entry: ConfigEntry) -> N
         lat = person_data.get(ATTR_LATITUDE, 0)
         lng = person_data.get(ATTR_LONGITUDE, 0)
         
-        # Find and trigger SOS sensor
-        for state in hass.states.async_all("binary_sensor"):
-            if state.entity_id.endswith("_sos_active") and DOMAIN in state.entity_id:
-                # Get the entity and trigger it
-                entity_id = state.entity_id
-                # Update via coordinator
-                _LOGGER.info("SOS triggered for %s", person)
-                
-                # Send notifications
-                notify_targets = entry.options.get(CONF_SOS_NOTIFY_TARGETS, [])
-                for target in notify_targets:
-                    await hass.services.async_call(
-                        "notify",
-                        target.replace("notify.", ""),
-                        {
-                            "title": "🆘 SOS ALERT",
-                            "message": f"SOS from {person}!\n\nLocation: {lat}, {lng}\n\nThey need help immediately!",
-                        },
-                    )
-                break
+        _LOGGER.info("SOS triggered for %s at %s, %s", person, lat, lng)
+        
+        # Send notifications
+        notify_targets = entry.options.get(CONF_SOS_NOTIFY_TARGETS, [])
+        for target in notify_targets:
+            try:
+                await hass.services.async_call(
+                    "notify",
+                    target.replace("notify.", ""),
+                    {
+                        "title": "🆘 SOS ALERT",
+                        "message": f"SOS from {person}!\n\nLocation: {lat}, {lng}\n\nThey need help immediately!",
+                    },
+                )
+            except Exception as e:
+                _LOGGER.error("Failed to send SOS notification: %s", e)
 
     async def handle_clear_sos(call: ServiceCall) -> None:
         """Handle SOS clear service."""
