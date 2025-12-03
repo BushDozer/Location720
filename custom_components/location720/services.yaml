@@ -1,0 +1,27 @@
+trigger_sos:
+  name: Trigger SOS
+  description: Trigger an SOS alert for a tracked person.
+  fields:
+    person:
+      name: Person
+      description: Name of the person triggering SOS.
+      required: true
+      example: "John"
+      selector:
+        text:
+
+clear_sos:
+  name: Clear SOS
+  description: Clear an active SOS alert.
+
+clear_crash:
+  name: Clear Crash Alert
+  description: Clear a crash detection alert (I'm OK).
+  fields:
+    person:
+      name: Person
+      description: Name of the person to clear crash alert for.
+      required: true
+      example: "John"
+      selector:
+        text:

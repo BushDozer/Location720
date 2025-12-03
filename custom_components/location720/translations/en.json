@@ -1,0 +1,128 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Create Location720 Tracker",
+        "description": "Set up a new family location tracker group.",
+        "data": {
+          "title": "Group Name"
+        },
+        "data_description": {
+          "title": "Give this tracker group a name (e.g., 'Family', 'Kids')"
+        }
+      },
+      "select_trackers": {
+        "title": "Select Devices to Track",
+        "description": "Choose which device trackers to monitor. Only devices with GPS coordinates are shown.",
+        "data": {
+          "trackers": "Device Trackers"
+        }
+      },
+      "configure_persons": {
+        "title": "Configure People",
+        "description": "Set display names and colors for each tracked person.",
+        "data": {
+          "name_0": "Person 1 Name",
+          "color_0": "Person 1 Color",
+          "name_1": "Person 2 Name",
+          "color_1": "Person 2 Color",
+          "name_2": "Person 3 Name",
+          "color_2": "Person 3 Color",
+          "name_3": "Person 4 Name",
+          "color_3": "Person 4 Color"
+        }
+      }
+    },
+    "abort": {
+      "no_trackers": "No device trackers with GPS coordinates found. Install the Home Assistant Companion app on mobile devices first.",
+      "already_configured": "This tracker group is already configured."
+    },
+    "error": {
+      "no_selection": "Please select at least one device tracker."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Location720 Settings",
+        "menu_options": {
+          "tracked_devices": "Tracked Devices",
+          "map_settings": "Map Settings",
+          "history_settings": "History Settings",
+          "crash_detection": "Crash Detection",
+          "sos_settings": "SOS Button",
+          "filters": "Filters"
+        }
+      },
+      "tracked_devices": {
+        "title": "Tracked Devices",
+        "description": "Update display names and colors for tracked people."
+      },
+      "map_settings": {
+        "title": "Map Settings",
+        "description": "Configure map display options.",
+        "data": {
+          "default_zoom": "Default Zoom Level",
+          "update_interval": "Update Interval",
+          "auto_follow": "Auto-Follow Person"
+        },
+        "data_description": {
+          "auto_follow": "Map automatically pans to keep this person in view. Select 'off' to disable."
+        }
+      },
+      "history_settings": {
+        "title": "History Settings",
+        "description": "Configure route history recording.",
+        "data": {
+          "history_days": "Days of History to Show",
+          "coord_precision": "Coordinate Precision (decimal places)"
+        },
+        "data_description": {
+          "coord_precision": "Higher precision = more detail but larger database. 6 decimal places ≈ 10cm accuracy."
+        }
+      },
+      "crash_detection": {
+        "title": "Crash Detection (Beta)",
+        "description": "Detect possible vehicle crashes by monitoring rapid deceleration.",
+        "data": {
+          "crash_enabled": "Enable Crash Detection",
+          "crash_min_speed_before": "Minimum Speed Before (km/h)",
+          "crash_max_speed_after": "Maximum Speed After (km/h)",
+          "crash_time_window": "Deceleration Window",
+          "crash_confirmation_delay": "Confirmation Delay",
+          "crash_cooldown": "Alert Cooldown",
+          "crash_notify_targets": "Notification Targets"
+        },
+        "data_description": {
+          "crash_min_speed_before": "Must be traveling at least this fast before sudden stop.",
+          "crash_max_speed_after": "Must slow to this speed or less.",
+          "crash_time_window": "Speed drop must occur within this time.",
+          "crash_confirmation_delay": "Wait this long before sending alerts (allows 'I'm OK' cancellation).",
+          "crash_cooldown": "Minimum time between crash alerts."
+        }
+      },
+      "sos_settings": {
+        "title": "SOS Button",
+        "description": "Configure emergency SOS button.",
+        "data": {
+          "sos_enabled": "Enable SOS Button",
+          "sos_hold_duration": "Hold Duration to Activate",
+          "sos_notify_targets": "Notification Targets"
+        },
+        "data_description": {
+          "sos_hold_duration": "How long the SOS button must be held to trigger."
+        }
+      },
+      "filters": {
+        "title": "Filters",
+        "description": "Filter out low-quality location data.",
+        "data": {
+          "min_gps_accuracy": "Minimum GPS Accuracy"
+        },
+        "data_description": {
+          "min_gps_accuracy": "Ignore location updates with accuracy worse than this value."
+        }
+      }
+    }
+  }
+}
