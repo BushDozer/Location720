@@ -983,7 +983,6 @@ class Location720Card extends HTMLElement {
     // Auto-follow settings
     this._autoFollowTarget = this._config.auto_follow || "off";
     this._lastAutoFollowPan = 0;
-    }).addTo(this._map);
   }
 
   async _loadData() {
