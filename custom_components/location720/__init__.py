@@ -29,12 +29,16 @@ _LOGGER = logging.getLogger(__name__)
 FRONTEND_SCRIPT_URL = "/location720/location720.js"
 
 
+async def async_setup(hass: HomeAssistant, config: dict) -> bool:
+    """Set up Location720 domain - registers frontend."""
+    await _async_register_frontend(hass)
+    return True
+
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Location720 from a config entry."""
     hass.data.setdefault(DOMAIN, {})
-    
-    # Register frontend resources
-    await _async_register_frontend(hass)
     
     coordinator = Location720Coordinator(hass, entry)
     await coordinator.async_config_entry_first_refresh()
